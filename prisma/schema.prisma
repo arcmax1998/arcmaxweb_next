@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  meta        String  @db.Text
+  description String  @db.LongText
+  impact      String  @db.Text
+  role        String  @default("Analyst • Architect • Coder • Tester")
+  
+  images        ProjectImage[]
+  features      ProjectFeature[]
+  technologies  ProjectTechnology[]
+}
+
+model ProjectImage {
+  id        Int    @id @default(autoincrement())
+  imageUrl  String
+  order     Int
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+}
+
+model ProjectFeature {
+  id        Int    @id @default(autoincrement())
+  text      String
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+}
+
+model ProjectTechnology {
+  id        Int    @id @default(autoincrement())
+  name      String
+
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId Int
+}
+
+model Testimonial {
+  id        Int    @id @default(autoincrement())
+  initials  String
+  name      String
+  role      String
+  text      String @db.LongText
+  footer    String
+  theme     Json
+}
+
+model Skill {
+  id            Int      @id @default(autoincrement())
+  category      String   @db.VarChar(100)
+  categoryColor String   @db.VarChar(50)   // Stores color values like 'indigo', 'cyan', '#DC2626'
+  title         String   @db.VarChar(200)
+  description   String   @db.Text
+  skillsList    Json                        // Stores the array of skills as JSON
+  displayOrder  Int      @default(0)
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@unique([category])
+  @@index([displayOrder])
+  @@map("skills")
+}
