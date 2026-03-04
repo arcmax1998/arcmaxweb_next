@@ -100,12 +100,12 @@ export default function Contact() {
               WhatsApp
             </div>
             <a
-              href="https://wa.me/1234567890"
+              href="https://wa.me/919940265655"
               target="_blank"
               rel="noopener noreferrer"
               className="text-white font-medium hover:text-[#25D366] transition-colors"
             >
-              +1 (234) 567-890
+              +91 9940265655
             </a>
           </div>
         </div>
