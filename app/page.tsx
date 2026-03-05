@@ -31,20 +31,30 @@ export default async function Home() {
     const processedTestimonials = testimonials.map(t => ({
       ...t,
       theme: t.theme as any
+      // Handle nullable dates if needed
+      
     }));
 
-    // Process skills to ensure skillsList is properly formatted
+    // Process skills to handle ALL nullable fields
     const processedSkills = skills.map(skill => ({
-      ...skill,
+      id: skill.id,
+      title: skill.title,
+      description: skill.description,
+      category: skill.category,
+      categoryColor: skill.categoryColor,
       skillsList: Array.isArray(skill.skillsList) 
         ? skill.skillsList.map(item => String(item))
-        : []
+        : [],
+      displayOrder: skill.displayOrder ?? 0,
+      // Handle nullable dates by converting to Date or undefined
+      createdAt: skill.createdAt || new Date(),
+      updatedAt:  skill.updatedAt || new Date()
     }));
 
     return (
       <main>
         <Hero />
-        <Projects projects={projects} /> {/* Pass projects to Projects component */}
+        <Projects projects={projects} />
         <Skills skills={processedSkills} />
         <Testimonials testimonials={processedTestimonials} />
         <Contact />
