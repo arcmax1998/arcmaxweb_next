@@ -34,12 +34,30 @@ export default function ProjectModal({
   const prev = () => setIndex((i) => (i - 1 + images.length) % images.length);
 
   // Generate alt text safely
+  // const getAltText = () => {
+  //   if (!project.meta) return `${project.title} project screenshot`;
+  //   const mainTech = project.meta.split('•')[0]?.trim() || 'custom solution';
+  //   const techList = project.technologies?.map(t => t.name).join(', ') || 'various technologies';
+  //   return `${project.title} - ${mainTech} built with ${techList}`;
+  // };
+
   const getAltText = () => {
-    if (!project.meta) return `${project.title} project screenshot`;
-    const mainTech = project.meta.split('•')[0]?.trim() || 'custom solution';
-    const techList = project.technologies?.map(t => t.name).join(', ') || 'various technologies';
-    return `${project.title} - ${mainTech} built with ${techList}`;
-  };
+  if (!project.meta) return `${project.title} project screenshot`;
+  
+  const mainTech = project.meta.split('•')[0]?.trim() || 'custom solution';
+  
+  // Handle technologies array safely
+  let techList = 'various technologies';
+  if (project.technologies?.length) {
+    const techNames = project.technologies
+      .map(t => t.name)
+      .filter(Boolean)  // Remove any null/undefined
+      .join(', ');
+    if (techNames) techList = techNames;
+  }
+  
+  return `${project.title} - ${mainTech} built with ${techList}`;
+};
 
   return (
     <div

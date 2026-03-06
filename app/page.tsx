@@ -17,7 +17,7 @@ export default async function Home() {
           technologies: true,
           features: true
         },
-        orderBy: { id: 'desc' }
+        orderBy: { order: 'asc' }
       }),
       prisma.skill.findMany({
         orderBy: { displayOrder: 'asc' }

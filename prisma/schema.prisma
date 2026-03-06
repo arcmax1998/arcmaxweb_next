@@ -16,6 +16,7 @@ model Project {
   description  String              @db.LongText
   impact       String              @db.Text
   role         String              @default("Analyst • Architect • Coder • Tester") @db.VarChar(255)
+  order        Int                 @default(0)
   images       ProjectImage[]
   features     ProjectFeature[]
   technologies ProjectTechnology[]
