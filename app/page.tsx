@@ -1,9 +1,12 @@
+
 import { prisma } from "@/lib/prisma";
 import Hero from "./components/sections/Hero";
 import Projects from "./components/sections/Projects"; // Changed from ProjectsGrid
 import Skills from "./components/sections/Skills";
 import Testimonials from "./components/sections/Testimonials";
 import Contact from "./components/sections/Contact";
+
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   try {
